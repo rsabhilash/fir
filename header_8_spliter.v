@@ -1,13 +1,17 @@
-module header_8_spliter (
-input [7:0] in_data ,
-output [11:0] out_data1 ,
-output [11:0] out_data2 ,
-output [11:0] out_data3 ,
-output [11:0] out_data4 ,
-output [11:0] out_data5 ,
-output [11:0] out_data6 ,
-output [11:0] out_data7 ,
-output [11:0] out_data8 
+module header_8_spliter 
+#( parameter IN_DATA_WIDTH = 17 ,
+   parameter OUT_DATA_WIDTH = 21 
+)
+(
+input [IN_DATA_WIDTH-1:0] in_data ,
+output [OUT_DATA_WIDTH-1:0] out_data1 ,
+output [OUT_DATA_WIDTH-1:0] out_data2 ,
+output [OUT_DATA_WIDTH-1:0] out_data3 ,
+output [OUT_DATA_WIDTH-1:0] out_data4 ,
+output [OUT_DATA_WIDTH-1:0] out_data5 ,
+output [OUT_DATA_WIDTH-1:0] out_data6 ,
+output [OUT_DATA_WIDTH-1:0] out_data7 ,
+output [OUT_DATA_WIDTH-1:0] out_data8 
 );	
 
 //simple outcheck

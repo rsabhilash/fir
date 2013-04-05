@@ -1,13 +1,16 @@
-module mux_8X1 (
-input [11:0] in0 ,				
-input [11:0] in1 ,				
-input [11:0] in2 ,				
-input [11:0] in3 ,				
-input [11:0] in4 ,				
-input [11:0] in5 ,				
-input [11:0] in6 ,				
-input [11:0] in7 ,				
-output reg [11:0] out,
+module mux_8X1 
+#(parameter OUT_DATA_WIDTH = 21
+)
+(
+input [OUT_DATA_WIDTH-1:0] in0 ,				
+input [OUT_DATA_WIDTH-1:0] in1 ,				
+input [OUT_DATA_WIDTH-1:0] in2 ,				
+input [OUT_DATA_WIDTH-1:0] in3 ,				
+input [OUT_DATA_WIDTH-1:0] in4 ,				
+input [OUT_DATA_WIDTH-1:0] in5 ,				
+input [OUT_DATA_WIDTH-1:0] in6 ,				
+input [OUT_DATA_WIDTH-1:0] in7 ,				
+output reg [OUT_DATA_WIDTH-1:0] out,
 input [2:0] select_lines
 );
 

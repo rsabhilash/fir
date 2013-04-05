@@ -1,36 +1,39 @@
 module checksum 
+#(parameter IN_DATA_WIDTH = 17,
+  parameter OUT_DATA_WIDTH = 21
+)
 (
 input clk ,
 input reset ,
 input in_data_vld ,
-input [7:0] in_data ,
+input [IN_DATA_WIDTH-1:0] in_data ,
 input [3:0] polynomial ,
-output  [11:0] out_data ,
+output  [OUT_DATA_WIDTH-1:0] out_data ,
 output  out_data_vld 
 ) ;
 
-wire [11:0] out_data1 ;
-wire [11:0] out_data2 ;
-wire [11:0] out_data3 ;
-wire [11:0] out_data4 ;
-wire [11:0] out_data5 ;
-wire [11:0] out_data6 ;
-wire [11:0] out_data7 ;
-wire [11:0] out_data8 ;
-wire [11:0] out_mux ;
-wire [11:0] out_mux_modified ;
-wire [11:0] out_i_shifter ;
+wire [OUT_DATA_WIDTH-1:0] out_data1 ;
+wire [OUT_DATA_WIDTH-1:0] out_data2 ;
+wire [OUT_DATA_WIDTH-1:0] out_data3 ;
+wire [OUT_DATA_WIDTH-1:0] out_data4 ;
+wire [OUT_DATA_WIDTH-1:0] out_data5 ;
+wire [OUT_DATA_WIDTH-1:0] out_data6 ;
+wire [OUT_DATA_WIDTH-1:0] out_data7 ;
+wire [OUT_DATA_WIDTH-1:0] out_data8 ;
+wire [OUT_DATA_WIDTH-1:0] out_mux ;
+wire [OUT_DATA_WIDTH-1:0] out_mux_modified ;
+wire [OUT_DATA_WIDTH-1:0] out_i_shifter ;
 
 wire [2:0] select_lines ;
 wire [1:0] i_shifter_count ;
 wire select_line_vld ;
 wire polynomial_zero ;
 
-reg [7:0] in_data_latch ;
+reg [IN_DATA_WIDTH-1:0] in_data_latch ;
 
 assign out_data = out_i_shifter ;
 assign out_data_vld = select_line_vld ;
-assign out_mux_modified = polynomial_zero ? 8'b0 : out_mux ;
+assign out_mux_modified = polynomial_zero ? 0 : out_mux ;
 
 always @ (posedge clk) begin 
 	if(reset)begin
