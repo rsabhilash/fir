@@ -40,7 +40,8 @@ initial begin
 	x=1;
 	y=15;
 	$display("Simulation started") ;
-	check_single_data  ;
+	//check_single_data  ;
+	check_multiple_data  ;
 	//for(i=131071;i>1;i=i-1) begin
 	//	$display("info : loop %d ",i) ;
 	//	for(j=0;j<15;j=j+1) begin
@@ -60,6 +61,54 @@ end
 
 always #(clock_by_2) clk = ~clk ;
 
+task check_multiple_data ;
+	begin 
+		$display("Task check_multiple_data started") ;
+		for(i=131071;i>1;i=i-1) begin
+			$display("info : loop %d ",i) ;
+			for(j=131071;j>1;j=j-1) begin
+			in_data_vld = 1 ;
+			in_data = i ;
+			polynomial = j ;
+			#clock ;
+			in_data_vld = 0 ;
+			get_out_data_pre_cal ;
+			//$display("waiting") ;
+			//@(posedge out_data_vld);
+			//if(out_data_pre_cal == out_data) begin
+			//	$display("info : out OK")	;
+			//end
+			//else begin
+			//	$display("eRROr : out NOt oK");
+			//end
+			#(10*clock) ;
+			end
+		end
+	end
+endtask
+
+always @ (posedge clk) begin 
+if(!reset)begin
+	if(out_data_vld) begin
+		if(out_data_pre_cal == out_data) begin
+			//$display("info : out OK")	;
+		end
+		else begin
+			$display("eRROr : out NOt oK");
+		end
+	end
+end
+end
+
+task get_out_data_pre_cal ;
+	begin 
+		out_data_pre_cal = polynomial[15:0]*in_data ;
+		if(polynomial[16]) begin
+			out_data_pre_cal = ~out_data_pre_cal + 1 ;
+		end
+	end
+endtask
+
 task check_single_data ;
 	begin 
 	$display("Task check_single_data started") ;
@@ -75,13 +124,14 @@ task check_single_data ;
 	$display("TEST:out_data_pre_cal %d",out_data_pre_cal) ;
 	end
 endtask
-always @ (posedge clk) begin 
-if(!reset)begin
-	if(out_data_vld) begin	
-		$display("out_data %d ",out_data) ;
-	end
-end
-end
+
+//always @ (posedge clk) begin 
+//if(!reset)begin
+//	if(out_data_vld) begin	
+//		$display("out_data %d ",out_data) ;
+//	end
+//end
+//end
 
 
 //always @ (posedge clk) begin : catch_output
