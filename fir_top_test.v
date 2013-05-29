@@ -6,6 +6,7 @@ parameter clock = clock_by_2*2 ;
 reg clk ;
 reg reset ;
 reg [16:0] x_in ;
+reg in_data_vld ;
 reg [16:0] c0 ;
 reg [16:0] c1 ;
 reg [16:0] c2 ;
@@ -22,6 +23,7 @@ fir fir (
 .clk(clk),
 .reset(reset),
 .x_in(x_in),
+.in_data_vld(in_data_vld),
 .c0(c0),
 .c1(c1),
 .c2(c2),
@@ -34,6 +36,7 @@ initial begin
 	clk = 0 ;
 	reset = 1 ;
 	x_in =0 ;
+	in_data_vld = 0 ;
 	c0=c[0] ;
 	c1=c[1] ;
 	c2=c[2] ;

@@ -2,6 +2,7 @@ module fir(
 input clk ,
 input reset ,
 input [16:0] x_in ,
+input in_data_vld ,
 input [16:0] c0 ,
 input [16:0] c1 ,
 input [16:0] c2 ,
@@ -9,10 +10,17 @@ input [16:0] c3 ,
 output [35:0] y_out
 );
 
+
+localparam OUT_DATA_WIDTH = 21 ;
+
 wire [35:0] product0 ;
 wire [35:0] product1 ;
 wire [35:0] product2 ;
 wire [35:0] product3 ;
+wire [33:0] product0_trim ;
+wire [33:0] product1_trim ;
+wire [33:0] product2_trim ;
+wire [33:0] product3_trim ;
 wire [35:0] product0_delay ;
 wire [35:0] product1_delay ;
 wire [35:0] product2_delay ;
@@ -26,33 +34,109 @@ wire [35:0] adder3_out ;
 
 assign y_out =  adder1_out ;
 
-fir_mul fir_mul0 (
-.x_in(x_in),
-.c(c0),
-.product(product0)
+
+wire [OUT_DATA_WIDTH-1:0] x1 ;
+wire [OUT_DATA_WIDTH-1:0] x3 ;
+wire [OUT_DATA_WIDTH-1:0] x5 ;
+wire [OUT_DATA_WIDTH-1:0] x7 ;
+wire [OUT_DATA_WIDTH-1:0] x9 ;
+wire [OUT_DATA_WIDTH-1:0] x11 ;
+wire [OUT_DATA_WIDTH-1:0] x13 ;
+wire [OUT_DATA_WIDTH-1:0] x15 ;
+
+assign product0 = {2'b0,product0_trim} ;
+assign product1 = {2'b0,product1_trim} ;
+assign product2 = {2'b0,product2_trim} ;
+assign product3 = {2'b0,product3_trim} ;
+
+
+checksum_four fir_mul0 (
+.clk         (clk         ),
+.reset       (reset       ),
+.in_data_vld (in_data_vld ),
+.in_data     (x_in    ),
+.polynomial  (c0  ),
+.x1          (x1          ),
+.x3          (x3          ),
+.x5          (x5          ),
+.x7          (x7          ),
+.x9          (x9          ),
+.x11         (x11         ),
+.x13         (x13         ),
+.x15         (x15         ),
+.out_data    (product0_trim    ),
+.out_data_vld(out_data_vld)
+);
+
+checksum_four fir_mul1 (
+.clk         (clk         ),
+.reset       (reset       ),
+.in_data_vld (in_data_vld ),
+.in_data     (x_in    ),
+.polynomial  (c1  ),
+.x1          (x1          ),
+.x3          (x3          ),
+.x5          (x5          ),
+.x7          (x7          ),
+.x9          (x9          ),
+.x11         (x11         ),
+.x13         (x13         ),
+.x15         (x15         ),
+.out_data    (product1_trim    ),
+.out_data_vld(out_data_vld)
 );
 
 
-fir_mul fir_mul1 (
-.x_in(x_in),
-.c(c1),
-.product(product1)
+checksum_four fir_mul2 (
+.clk         (clk         ),
+.reset       (reset       ),
+.in_data_vld (in_data_vld ),
+.in_data     (x_in    ),
+.polynomial  (c2  ),
+.x1          (x1          ),
+.x3          (x3          ),
+.x5          (x5          ),
+.x7          (x7          ),
+.x9          (x9          ),
+.x11         (x11         ),
+.x13         (x13         ),
+.x15         (x15         ),
+.out_data    (product2_trim    ),
+.out_data_vld(out_data_vld)
 );
 
 
-fir_mul fir_mul2 (
-.x_in(x_in),
-.c(c2),
-.product(product2)
+checksum_four fir_mul3 (
+.clk         (clk         ),
+.reset       (reset       ),
+.in_data_vld (in_data_vld ),
+.in_data     (x_in    ),
+.polynomial  (c3  ),
+.x1          (x1          ),
+.x3          (x3          ),
+.x5          (x5          ),
+.x7          (x7          ),
+.x9          (x9          ),
+.x11         (x11         ),
+.x13         (x13         ),
+.x15         (x15         ),
+.out_data    (product3_trim    ),
+.out_data_vld(out_data_vld)
 );
 
 
-fir_mul fir_mul3 (
-.x_in(x_in),
-.c(c3),
-.product(product3)
-);
 
+precomputer precomputer_uut (
+.in_data(x_in),
+.x1(x1), 
+.x3(x3), 
+.x5(x5), 
+.x7(x7), 
+.x9(x9), 
+.x11(x11), 
+.x13(x13), 
+.x15(x15)
+);
 
 fir_delay fir_delay_product0 (
 .clk(clk),
