@@ -70,9 +70,9 @@ task check_multiple_data ;
 			in_data_vld = 1 ;
 			in_data = i ;
 			polynomial = j ;
+			get_out_data_pre_cal ;
 			#clock ;
 			in_data_vld = 0 ;
-			get_out_data_pre_cal ;
 			//$display("waiting") ;
 			//@(posedge out_data_vld);
 			//if(out_data_pre_cal == out_data) begin
@@ -81,15 +81,15 @@ task check_multiple_data ;
 			//else begin
 			//	$display("eRROr : out NOt oK");
 			//end
-			#(10*clock) ;
+			#(clock) ;
 			end
 		end
 	end
 endtask
 
-always @ (posedge clk) begin 
-if(!reset)begin
+always @ (out_data_vld) begin 
 	if(out_data_vld) begin
+		#1 ;
 		if(out_data_pre_cal == out_data) begin
 			//$display("info : out OK")	;
 		end
@@ -97,7 +97,6 @@ if(!reset)begin
 			$display("eRROr : out NOt oK");
 		end
 	end
-end
 end
 
 task get_out_data_pre_cal ;
@@ -115,12 +114,12 @@ task check_single_data ;
 	in_data_vld = 1 ;
 	in_data = 131071 ;
 	polynomial = 131071 ;
-	#clock ;
-	in_data_vld = 0  ;
 	out_data_pre_cal = polynomial[15:0]*in_data ;
 	if(polynomial[16]) begin
 		out_data_pre_cal = ~out_data_pre_cal + 1 ;
 	end
+	#clock ;
+	in_data_vld = 0  ;
 	$display("TEST:out_data_pre_cal %d",out_data_pre_cal) ;
 	end
 endtask
