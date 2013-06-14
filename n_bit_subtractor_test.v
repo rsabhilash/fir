@@ -1,5 +1,5 @@
 module n_bit_subtractor_test ;
-parameter IN_DATAWIDTH = 8 ;
+parameter IN_DATAWIDTH = 4 ;
 parameter OUT_DATAWIDTH = IN_DATAWIDTH+1 ;
 
 reg [IN_DATAWIDTH-1:0] in1 ;
@@ -11,10 +11,10 @@ reg [OUT_DATAWIDTH-1:0] sum_local ;
 
 integer i,j ;
 
-n_bit_subtractor #(
+n_bit_csa_subtractor #(
 .IN_DATAWIDTH(IN_DATAWIDTH)
 )
-n_bit_subtractor
+n_bit_csa_subtractor
 (
 .in1(in1),
 .in2(in2),
@@ -27,8 +27,8 @@ initial begin
 	in2 = 0 ;
 	cin = 0 ;
 	#1 ;
-	for(i=0;i<256;i=i+1) begin 
-		for(j=0;j<256;j=j+1) begin 
+	for(i=0;i<16;i=i+1) begin 
+		for(j=0;j<16;j=j+1) begin 
 			in1 = i ; in2 = j ;
 			sum_local = i-j-cin ;
 			#1 ;
