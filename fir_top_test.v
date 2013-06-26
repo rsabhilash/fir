@@ -49,14 +49,17 @@ initial begin
 	x[4]=1;
 	x[5]=2;
 	x[6]=3;
-	c0=0;
-	c1=1;
-	c2=2;
-	c3=3;
+	c0=0; c[0] = c0 ;
+	c1=1; c[1] = c1 ;
+	c2=2; c[2] = c2 ;
+	c3=3; c[3] = c3 ;
 	#(10*clock) ;
 	reset =0 ;
 	$display("Simulation started") ;
+	$display(" Input data vector is %p",x) ;
+	$display(" Coefficients are %p",c);
 	inject_data ;
+    pre_calclate_fir ;
 	#(100*clock) ;
 	$finish ;
 end
@@ -73,12 +76,46 @@ task inject_data ;
 			$display("%d ",y_out) ;
 		end
 		x_in = 0 ;
-		for(i=0;i<4;i=i+1) begin 
+		for(i=0;i<3;i=i+1) begin 
 			#clock ;
 			$display("%d ",y_out) ;
 		end
 	end
 endtask
+
+task pre_calclate_fir ;
+    integer i ;
+    integer y[0:9] ;
+    begin 
+        //$display("Precalculated result %p",x) ;
+        //$display("Coefficients %p",c) ;
+        for (i=0; i<10; i=i+1) begin
+            if (i>=3 && i<=6) begin 
+                y[i] = c[0]*x[i] + c[1]*x[i-1] + c[2]*x[i-2] + c[3]*x[i-3] ;
+            end
+            else if(i==2) begin
+                y[i] = c[0]*x[i] + c[1]*x[i-1] + c[2]*x[i-2]  ;
+            end
+            else if(i==1) begin
+                y[i] = c[0]*x[i] + c[1]*x[i-1]  ;
+            end
+            else if(i==0) begin
+                y[i] = c[0]*x[i]  ;
+            end
+            else if(i==7) begin
+                y[i] = c[1]*x[i-1] + c[2]*x[i-2] + c[3]*x[i-3] ;
+            end
+            else if(i==8) begin
+                y[i] = c[2]*x[i-2] + c[3]*x[i-3] ;
+            end
+            else if(i==9) begin
+                y[i] = c[3]*x[i-3] ;
+            end
+        end
+        $display("Precalculated result %p",y) ;
+    end
+endtask
+
 
 always @ (y_out) begin 
 	//$display("%d ",y_out) ;
