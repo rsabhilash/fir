@@ -50,7 +50,7 @@ assign product2 = {2'b0,product2_trim} ;
 assign product3 = {2'b0,product3_trim} ;
 
 
-checksum_four fir_mul0 (
+comp_share_combined_block fir_mul0 (
 .clk         (clk         ),
 .reset       (reset       ),
 .in_data_vld (in_data_vld ),
@@ -68,7 +68,7 @@ checksum_four fir_mul0 (
 .out_data_vld(out_data_vld)
 );
 
-checksum_four fir_mul1 (
+comp_share_combined_block fir_mul1 (
 .clk         (clk         ),
 .reset       (reset       ),
 .in_data_vld (in_data_vld ),
@@ -87,7 +87,7 @@ checksum_four fir_mul1 (
 );
 
 
-checksum_four fir_mul2 (
+comp_share_combined_block fir_mul2 (
 .clk         (clk         ),
 .reset       (reset       ),
 .in_data_vld (in_data_vld ),
@@ -106,7 +106,7 @@ checksum_four fir_mul2 (
 );
 
 
-checksum_four fir_mul3 (
+comp_share_combined_block fir_mul3 (
 .clk         (clk         ),
 .reset       (reset       ),
 .in_data_vld (in_data_vld ),

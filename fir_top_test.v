@@ -1,3 +1,5 @@
+`define INPUT_FILE "x_inputs.txt"
+`define COEFFICIENT_FILE "coefficients_input.txt"
 module  fir_top_test ;
 
 parameter clock_by_2 = 4 ;
@@ -24,10 +26,10 @@ fir fir (
 .reset(reset),
 .x_in(x_in),
 .in_data_vld(in_data_vld),
-.c0(c0),
-.c1(c1),
-.c2(c2),
-.c3(c3),
+.c0({c[0][16:0]}),
+.c1({c[1][16:0]}),
+.c2({c[2][16:0]}),
+.c3({c[3][16:0]}),
 .y_out(y_out)
 );
 
@@ -37,22 +39,8 @@ initial begin
 	reset = 1 ;
 	x_in =0 ;
 	in_data_vld = 0 ;
-	c0=c[0] ;
-	c1=c[1] ;
-	c2=c[2] ;
-	c3=c[3] ;
-	//{x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7]} = {3,2,1,0,1,2,3} ;
-	x[0]=3;
-	x[1]=2;
-	x[2]=1;
-	x[3]=0;
-	x[4]=1;
-	x[5]=2;
-	x[6]=3;
-	c0=0; c[0] = c0 ;
-	c1=1; c[1] = c1 ;
-	c2=2; c[2] = c2 ;
-	c3=3; c[3] = c3 ;
+    $readmemh(`INPUT_FILE,x) ;
+    $readmemh(`COEFFICIENT_FILE,c) ;
 	#(10*clock) ;
 	reset =0 ;
 	$display("Simulation started") ;

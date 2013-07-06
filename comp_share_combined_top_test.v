@@ -1,4 +1,4 @@
-module  checksum_test ;
+module  comp_share_combined_top_test ;
 
 parameter clock_by_2 = 4 ;
 parameter clock = clock_by_2*2 ;
@@ -16,7 +16,7 @@ reg [SUM_WIDTH-1:0] out_data_pre_cal ;
 wire [SUM_WIDTH-1:0] out_data ;
 wire out_data_vld ;
 
-checksum_top uut (
+comp_share_combined_top uut (
 .clk         (clk         ),
 .reset       (reset       ),
 .in_data_vld (in_data_vld ),

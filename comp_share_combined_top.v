@@ -1,4 +1,4 @@
-module checksum_top 
+module comp_share_combined_top
 #(
 parameter IN_DATA_WIDTH = 17,
 parameter SUM_WIDTH = 34 ,
@@ -28,7 +28,7 @@ wire [OUT_DATA_WIDTH-1:0] x13 ;
 wire [OUT_DATA_WIDTH-1:0] x15 ;
 
 
-checksum_four checksum_four (
+comp_share_combined_block comp_share_combined_block (
 .clk         (clk         ),
 .reset       (reset       ),
 .in_data_vld (in_data_vld ),

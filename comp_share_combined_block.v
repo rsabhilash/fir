@@ -1,4 +1,4 @@
-module checksum_four
+module comp_share_combined_block
 #(
 parameter IN_DATA_WIDTH = 17,
 parameter SUM_WIDTH = 34 ,
@@ -37,7 +37,7 @@ assign out_data_2_shifted = {out_data_2,8'b0} ;
 assign out_data_1_shifted = {out_data_1,4'b0} ;
 assign out_data_0_shifted = {out_data_0} ;
 
-checksum checksum0 (
+comp_share_base_block comp_share_base_block0 (
 .clk         (clk         ),
 .reset       (reset       ),
 .in_data_vld (in_data_vld ),
@@ -54,7 +54,7 @@ checksum checksum0 (
 .out_data    (out_data_0   ),
 .out_data_vld(out_data_vld_0)
 			 );
-checksum checksum1 (
+comp_share_base_block comp_share_base_block1 (
 .clk         (clk         ),
 .reset       (reset       ),
 .in_data_vld (in_data_vld ),
@@ -71,7 +71,7 @@ checksum checksum1 (
 .out_data    (out_data_1   ),
 .out_data_vld(out_data_vld_1)
 			 );
-checksum checksum2 (
+comp_share_base_block comp_share_base_block2 (
 .clk         (clk         ),
 .reset       (reset       ),
 .in_data_vld (in_data_vld ),
@@ -88,7 +88,7 @@ checksum checksum2 (
 .out_data    (out_data_2   ),
 .out_data_vld(out_data_vld_2)
 			 );
-checksum checksum3 (
+comp_share_base_block comp_share_base_block3 (
 .clk         (clk         ),
 .reset       (reset       ),
 .in_data_vld (in_data_vld ),

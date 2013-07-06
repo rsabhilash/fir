@@ -1,4 +1,4 @@
-module checksum 
+module comp_share_base_block
 #(parameter IN_DATA_WIDTH = 17,
   parameter OUT_DATA_WIDTH = 21
 )
